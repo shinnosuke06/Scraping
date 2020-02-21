@@ -48,14 +48,23 @@ class ITmedia extends Command
         $crawler->filter('div.colBoxIndex')->each(function ($li) use ($client) {
             echo $li->filter('div.colBoxTitle h3 a')->text().PHP_EOL;
             echo $li->filter('div.colBoxTitle h3 a')->attr('href').PHP_EOL;
-
-
+            
             $title = $li->filter('div.colBoxTitle h3 a')->text();
             $url = $li->filter('div.colBoxTitle h3 a')->attr('href');
 
+        $crawler2 = $client->request('GET', 'https://www.itmedia.co.jp/'.$li->filter('div.colBoxTitle h3 a')->attr('href'));
+            //echo $crawler2->filter('div#cmsDate div span#update')->text('list').PHP_EOL; できなかった
+            echo $crawler2->filter('div div img')->attr('src').PHP_EOL;
+
+            //$time = $crawler2->filter('div#cmsDate div span#update')->text('list');　できなかった
+            $img = $crawler2->filter('div div img')->attr('src');
+
+
             \App\ITmedia::insert([
                 'title' => $title,
-                'url' => $url
+                'url' => $url,
+                //'time' => $time,　できなかった
+                'img' => $img
             ]);
 
             sleep(rand(2, 6));

@@ -50,17 +50,23 @@ class techcrunch extends Command
                 if($li->filter('div div h2.post-title a')->count() > 0){
                 echo $li->filter('div div h2.post-title a')->text().PHP_EOL;
                 echo $li->filter('div div h2.post-title a')->attr('href').PHP_EOL;
+                echo $li->filter('div div div time.timestamp')->text('field list').PHP_EOL;
+                echo $li->filter('div div span a img')->attr('src').PHP_EOL;
 
                 $title = $li->filter('div div h2.post-title a')->text();
                 $url = $li->filter('div div h2.post-title a')->attr('href');
+                $timestamp = $li->filter('div div div time.timestamp')->text('field list');
+                $img = $li->filter('div div span a img')->attr('src');
 
                 \App\techcrunch::insert([
                     'title' => $title,
-                    'url' => $url
+                    'url' => $url,
+                    'field list' => $timestamp,
+                    'img' => $img
                 ]);
                 }
 
-                sleep(rand(2, 6));
+                sleep(rand(1, 5));
             
     });
     }
